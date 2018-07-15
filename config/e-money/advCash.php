@@ -1,0 +1,22 @@
+<?php
+return [
+    'withdraw'=>[
+       'usd'=>[
+           'fee'=>0.0395,
+           'additionFee'=>6,
+       ],
+       'euro'=>[
+           'fee'=>0.0395,
+           'additionFee'=>6,
+        ],
+       'uah'=>[
+           'fee'=>0.0395,
+           'additionFee'=>30,
+       ]
+    ],
+    'deposit'=>[
+        'usd'=>[
+            'fee'=>0.0295,
+        ],
+    ]
+];
