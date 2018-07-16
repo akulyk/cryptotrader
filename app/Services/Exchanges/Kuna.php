@@ -2,6 +2,7 @@
 
 use GuzzleHttp\Client as GuzzleClient;
 use Guzzle\Stream\PhpStreamRequestFactory;
+use GuzzleHttp\Exception\ClientException;
 
 class Kuna
 {
@@ -23,8 +24,13 @@ class Kuna
     public function getDepth($pair){
         $pair = $this->normalizePair($pair);
         $client = clone $this->client;
-        $response = $client->get(static::API_DEPTH.$pair);
-        return $response->getBody()->getContents();
+        try {
+            $response = $client->get(static::API_DEPTH . $pair);
+
+            return $response->getBody()->getContents();
+        } catch (ClientException $e){
+
+        }
     }
 
     public function getAsks($pair){

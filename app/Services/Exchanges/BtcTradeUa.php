@@ -13,13 +13,13 @@ class BtcTradeUa extends AbstractExchangeService
     protected $pairs = [];
 
 
-    public function getAsks($pair){
+    public function getAsks($pair,$limit=10){
        $client = clone $this->client;
        $response = $client->get(static::API_ASKS.$pair);
        return $response->getBody()->getContents();
 
     }
-    public function getBids($pair){
+    public function getBids($pair,$limit){
         $client = clone $this->client;
         $response = $client->get(static::API_BIDS.$pair);
     }

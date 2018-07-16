@@ -35,4 +35,7 @@ abstract class AbstractExchangeService{
         $config = config('stock-exchanges.'.$name);
         return $config;
     }
+
+    abstract public function getBids($pair,$limit);
+    abstract public function getAsks($pair,$limit);
 }

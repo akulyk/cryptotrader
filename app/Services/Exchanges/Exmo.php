@@ -16,8 +16,8 @@ class Exmo extends AbstractExchangeService
         return $response->getBody()->getContents();
     }
 
-    public function getAsks($pair){
-     if($depth = $this->getDepth($pair)){
+    public function getAsks($pair,$limit = 10){
+     if($depth = $this->getDepth($pair,$limit)){
        $depth = json_decode($depth);
        $pair = $this->normalizePair($pair);
        $ask = $depth->$pair->ask;
@@ -25,8 +25,8 @@ class Exmo extends AbstractExchangeService
      }
 
     }
-    public function getBids($pair){
-        if($depth = $this->getDepth($pair)){
+    public function getBids($pair,$limit = 10){
+        if($depth = $this->getDepth($pair,$limit)){
             $depth = json_decode($depth);
             $pair = $this->normalizePair($pair);
             $bid = $depth->$pair->bid;
