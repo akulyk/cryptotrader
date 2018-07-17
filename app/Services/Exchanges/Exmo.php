@@ -20,8 +20,10 @@ class Exmo extends AbstractExchangeService
      if($depth = $this->getDepth($pair,$limit)){
        $depth = json_decode($depth);
        $pair = $this->normalizePair($pair);
-       $ask = $depth->$pair->ask;
-       return array_slice($ask,0,10);
+       if(property_exists($depth,$pair)) {
+           $ask = $depth->$pair->ask;
+           return array_slice($ask, 0, 10);
+       }
      }
 
     }
@@ -29,8 +31,10 @@ class Exmo extends AbstractExchangeService
         if($depth = $this->getDepth($pair,$limit)){
             $depth = json_decode($depth);
             $pair = $this->normalizePair($pair);
-            $bid = $depth->$pair->bid;
-            return array_slice($bid,0,10);
+            if(property_exists($depth,$pair)) {
+                $bid = $depth->$pair->bid;
+                return array_slice($bid, 0, 10);
+            }
         }
     }
 

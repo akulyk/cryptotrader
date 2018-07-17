@@ -2,6 +2,7 @@
 
 use GuzzleHttp\Client as GuzzleClient;
 use Guzzle\Stream\PhpStreamRequestFactory;
+use GuzzleHttp\Exception\ClientException;
 
 class BtcTradeUa extends AbstractExchangeService
 {
@@ -15,13 +16,22 @@ class BtcTradeUa extends AbstractExchangeService
 
     public function getAsks($pair,$limit=10){
        $client = clone $this->client;
-       $response = $client->get(static::API_ASKS.$pair);
-       return $response->getBody()->getContents();
+       try {
+           $response = $client->get(static::API_ASKS . $pair);
+           return json_decode($response->getBody()->getContents());
+       } catch (\Exception $e){
+
+       }
 
     }
     public function getBids($pair,$limit){
         $client = clone $this->client;
+        try{
         $response = $client->get(static::API_BIDS.$pair);
+            return json_decode($response->getBody()->getContents());
+    } catch (\Exception $e){
+
+}
     }
 
 }

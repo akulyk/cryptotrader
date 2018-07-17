@@ -13,6 +13,7 @@ return [
                //   'maxAmountPerMonth'=>300000,
               ],
               'advCash'=>[
+                  'type'=>'middleware',
                   'fee'=>0.02,
                   'maxAmountPerOperation'=>15000,
               ]
@@ -71,6 +72,7 @@ return [
       'deposit'=>[
           'usd'=>[
               'advCash'=>[
+                  'type'=>'middleware',
                   'fee'=>0
               ]
           ],

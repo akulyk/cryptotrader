@@ -48,12 +48,11 @@ return [
       'deposit'=>[
           'uah'=>[
               'visa/mastercard'=>[
-              'fee'=>0.01,
-              'additionalFee'=>5,
-              'maxAmountPerOperation'=>14500,
+                  'fee'=>0.01,
+                  'additionalFee'=>5,
+                  'maxAmountPerOperation'=>14500,
         //      'maxNumberOperationsPerDay'=>5,
+              ],
           ],
-
-        ],
       ]
 ];
