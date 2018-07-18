@@ -22,18 +22,22 @@ class Exmo extends AbstractExchangeService
        $pair = $this->normalizePair($pair);
        if(property_exists($depth,$pair)) {
            $ask = $depth->$pair->ask;
-           return array_slice($ask, 0, 10);
+           if(is_array($ask)) {
+               return array_slice($ask, 0, 10);
+           }
        }
      }
-
     }
+
     public function getBids($pair,$limit = 10){
         if($depth = $this->getDepth($pair,$limit)){
             $depth = json_decode($depth);
             $pair = $this->normalizePair($pair);
             if(property_exists($depth,$pair)) {
                 $bid = $depth->$pair->bid;
-                return array_slice($bid, 0, 10);
+                if(is_array($bid)) {
+                    return array_slice($bid, 0, 10);
+                }
             }
         }
     }

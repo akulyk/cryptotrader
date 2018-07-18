@@ -16,9 +16,13 @@ class DataService
         'eth_usd',
         'zec_usd',
         'ltc_usd',
+        'nmc_usd',
+        'nvc_usd',
+        'ppc_usd',
         'btc_uah',
         'eth_uah',
         'zec_uah',
+        'ltc_uah',
     ];
 
     protected $stocks = [
@@ -82,6 +86,7 @@ class DataService
             Cache::put('trades', $data, $cacheMinutes);
             Cache::put('lastUpdateTime',$this->lastUpdated,$cacheMinutes);
         }
+
         return $data;
     }
 
@@ -118,7 +123,7 @@ class DataService
             foreach ($stock as $stock_name => $asks) {
                 if ($asks && is_array($asks)) {
                     foreach ($asks as $ask) {
-                        $data[$currency][(float)$ask[0]] = ['stock'=>$stock_name];
+                        $data[$currency]["$ask[0]"] = ['stock'=>$stock_name];
                     }
                 }
             }
@@ -130,16 +135,18 @@ class DataService
     protected function normalizeBids($items)
     {
         $data = [];
+
         foreach ($items as $currency => $stock) {
             foreach ($stock as $stock_name => $bids) {
                 if ($bids && is_array($bids)) {
                     foreach ($bids as $bid) {
-                        $data[$currency][(float)$bid[0]] = ['stock'=>$stock_name];
+                        $data[$currency]["$bid[0]"] = ['stock'=>$stock_name];
                     }
                 }
             }
 
         }
+
         return $data;
     }
 
@@ -153,15 +160,15 @@ class DataService
     protected function normalizeData($pairs,$asks,$bids,$min,$max){
         $data = [];
         foreach ($pairs as $pair) {
-            $minBid = $min['bid'][$pair];
-            $maxBid = $max['bid'][$pair];
+            $minBid = $this->round($min['bid'][$pair]);
+            $maxBid = $this->round($max['bid'][$pair]);
             $minBidStock = $bids[$pair][$min['bid'][$pair]]['stock'];
             $maxBidStock = $bids[$pair][$max['bid'][$pair]]['stock'];
-            $minAsk =  $min['ask'][$pair];
-            $maxAsk = $max['ask'][$pair];
+            $minAsk = $this->round($min['ask'][$pair]);
+            $maxAsk = $this->round($max['ask'][$pair]);
             $minAskStock = $asks[$pair][$min['ask'][$pair]]['stock'];
             $maxAskStock = $asks[$pair][$max['ask'][$pair]]['stock'];
-            $delta = $max['bid'][$pair] - $min['ask'][$pair];
+            $delta = $this->round($max['bid'][$pair] - $min['ask'][$pair]);
 
             $profit = $this->getProfit($pair,$maxBid,$minAsk,$maxBidStock,$minAskStock);
 
@@ -200,7 +207,7 @@ class DataService
     }
 
     protected function getProfit($pair,$maxBid,$minAsk,$maxBidStock,$minAskStock){
-        $profit = 0;
+       
         $currencies = explode('_',$pair);
         $askCurrency = $currencies[0];
         $bidCurrency = $currencies[1];
@@ -224,6 +231,10 @@ class DataService
         if(isset($this->stocks[$stock])){
             return $this->stocks[$stock];
         }
+    }
+
+    protected function round($value,$digits = 4){
+        return round($value,$digits);
     }
 
 }

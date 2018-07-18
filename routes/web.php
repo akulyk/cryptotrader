@@ -11,7 +11,9 @@
 |
 */
 
-Route::get('/','HomeController@index')->name('home');
+Route::get('/','HomeController@actionIndex')->name('home');
+Route::get('/currency/{currency?}','HomeController@actionCurrency')
+    ->name('currency');
 
 Route::get('/yobit/info','Yobit@getInfo');
 Route::get('/yobit/info','Yobit@getPairs');
