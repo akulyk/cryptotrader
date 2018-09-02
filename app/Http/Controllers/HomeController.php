@@ -35,6 +35,7 @@ class HomeController extends BaseController
             'wex'=>Wex::class,
             'kuna'=>\App\Services\Exchanges\Kuna::class,
             'exmo'=>\App\Services\Exchanges\Exmo::class,
+            'btctradeua'=>\App\Services\Exchanges\BtcTradeUa::class
         ];
 
         $service = app()->make(StockDataService::class);

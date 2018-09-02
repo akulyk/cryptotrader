@@ -5,7 +5,7 @@ class DataService
 {
     protected $lastUpdated;
 
-    protected $usd_uah = 26.25;
+    protected $usd_uah = 28.2;
 
     protected $cacheDuration = 10;
 
@@ -119,6 +119,7 @@ class DataService
     protected function normalizeAsks($items)
     {
         $data = [];
+
         foreach ($items as $currency => $stock) {
             foreach ($stock as $stock_name => $asks) {
                 if ($asks && is_array($asks)) {
@@ -180,6 +181,8 @@ class DataService
                 $maxAsk =  $this->prepareValueWithBrackets($maxAsk);
 
                 $delta = $this->prepareValueWithBrackets($delta);
+
+                $profit = $this->prepareValueWithBrackets($profit);
             }
                 $data[] = [
                     'pair' => $pair,
@@ -198,7 +201,7 @@ class DataService
         return $data;
     }
 
-    protected function convertUahToUsd($value,$course = 26.25){
+    protected function convertUahToUsd($value,$course = 28.2){
         return round($value / $course,2);
     }
 
